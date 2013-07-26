@@ -21,9 +21,11 @@ PROVIDERS = {
 }
 
 YOUTUBE_EMBED = """
-<iframe width="459" height="344" \
+<iframe width="100%" height="100%" \
 src="http://www.youtube.com/embed/d8bEU80gIzQ?feature=oembed" \
-frameborder="0" allowfullscreen></iframe>
+frameborder="0" allowfullscreen title="Introducing Plone">\
+<a href="http://www.youtube.com/watch?v=d8bEU80gIzQ">\
+Introducing Plone</a></iframe>
 """.strip('\n')
 
 
