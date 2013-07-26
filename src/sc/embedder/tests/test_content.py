@@ -28,6 +28,13 @@ frameborder="0" allowfullscreen title="Introducing Plone">\
 Introducing Plone</a></iframe>
 """.strip('\n')
 
+VIMEO_EMBED = """
+<iframe src="http://player.vimeo.com/video/17914974" \
+width="100%" height="100%" frameborder="0" webkitallowfullscreen \
+mozallowfullscreen allowfullscreen title="The Backwater Gospel">\
+<a href="http://vimeo.com/17914974">The Backwater Gospel</a></iframe>
+""".strip('\n')
+
 
 class MultimediaTestCase(unittest.TestCase):
 
@@ -142,17 +149,13 @@ class MultimediaTestCase(unittest.TestCase):
 
         # We trigger the action of load
         add_form.handleLoad(add_form, action)
-        iframe = '<iframe src="http://player.vimeo.com/video/17914974" ' + \
-            'width="1280" height="720" frameborder="0" ' + \
-            'webkitAllowFullScreen mozallowfullscreen ' + \
-            'allowFullScreen></iframe>'
 
         self.assertEqual(
             u'The Backwater Gospel', add_form.widgets['IDublinCore.title'].value)
         self.assertEqual(
             417, len(add_form.widgets['IDublinCore.description'].value))
         self.assertEqual(
-            iframe, add_form.widgets['embed_html'].value)
+            VIMEO_EMBED, add_form.widgets['embed_html'].value)
         self.assertEqual(
             u'1280', add_form.widgets['width'].value)
         self.assertEqual(

@@ -235,7 +235,8 @@ class BaseForm(DexterityExtensibleForm):
 
             # Acessibility issues
             iframe = html.fromstring(json_data['html'])
-            iframe.attrib['title'] = json_data['title']
+            if json_data.has_key('title'):
+                iframe.attrib['title'] = json_data['title']
             iframe.attrib['width'] = '100%'
             iframe.attrib['height'] = '100%'
             a = html.builder.A()
