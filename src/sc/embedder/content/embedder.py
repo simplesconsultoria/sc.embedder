@@ -232,6 +232,19 @@ class BaseForm(DexterityExtensibleForm):
                 json_data = self.get_fallback(url)
                 if json_data is None:
                     return
+
+            # Acessibility issues
+            iframe = html.fromstring(json_data['html'])
+            iframe.attrib['title'] = json_data['title']
+            iframe.attrib['width'] = '100%'
+            iframe.attrib['height'] = '100%'
+            a = html.builder.A()
+            a.attrib['href'] = url
+            a.text = json_data['title']
+            iframe.append(a)
+            json_data['html'] = html.tostring(iframe)
+            # Acessibility issues
+
             for k, v in self.tr_fields.iteritems():
                 if json_data.get(k):
                     self.widgets[v].value = unicode(json_data[k])
