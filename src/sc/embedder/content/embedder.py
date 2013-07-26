@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from lxml import etree, cssselect, html
+from lxml.html import builder as E
 
 from five import grok
 
@@ -234,14 +235,19 @@ class BaseForm(DexterityExtensibleForm):
                     return
 
             # Acessibility issues
-            iframe = html.fromstring(json_data['html'])
             if json_data.has_key('title'):
-                iframe.attrib['title'] = json_data['title']
-            iframe.attrib['width'] = '100%'
-            iframe.attrib['height'] = '100%'
-            a = html.builder.A()
+                title = json_data['title']
+            else:
+                title = _('ADD THE TITLE OF THE CONTENT HERE')
+            iframe = html.fromstring(json_data['html'])
+            iframe.attrib['title'] = title
+            if json_data.has_key('width'):
+                iframe.attrib['width'] = '100%'
+            if json_data.has_key('height'):
+                iframe.attrib['height'] = '100%'
+            a = E.A()
             a.attrib['href'] = url
-            a.text = json_data['title']
+            a.text = title
             iframe.append(a)
             json_data['html'] = html.tostring(iframe)
             # Acessibility issues
