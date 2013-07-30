@@ -13,7 +13,8 @@ There's a frood who really knows where his towel is
   * You need to add a link into the iframe tag to point to the content,
     like this if the browser (or the screen reader) don't support iframe
     it behaves as alternative content.
-
+* The W3C Validator suggest that the attribute frameborder is obsolete,
+  so I take it out if I find this attribute into the iframe element.
 
 1.0b3 (2013-07-23)
 ^^^^^^^^^^^^^^^^^^

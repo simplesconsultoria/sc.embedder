@@ -246,6 +246,8 @@ class BaseForm(DexterityExtensibleForm):
                     iframe.attrib['width'] = '100%'
                 if json_data.has_key('height'):
                     iframe.attrib['height'] = '100%'
+                if iframe.attrib.has_key('frameborder'):
+                    del(iframe.attrib['frameborder'])
                 a = E.A()
                 a.attrib['href'] = url
                 a.text = title
