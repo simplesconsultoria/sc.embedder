@@ -7,7 +7,7 @@ There's a frood who really knows where his towel is
 - The WCGA 1.0 and WCGA 2.0 specifications and validators require some
   changes for acessibility issues:
   * You can't use fixed value in width and height (this will be overriden
-    with css in your site)
+    with css in your site).
   * You need a title attribute in the iframe to make some screen readers
     for blind people work.
   * You need to add a link into the iframe tag to point to the content,
