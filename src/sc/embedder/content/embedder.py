@@ -235,24 +235,25 @@ class BaseForm(DexterityExtensibleForm):
                     return
 
             # Acessibility issues
-            iframe = html.fromstring(json_data['html'])
-            if iframe.tag == 'iframe':
-                if json_data.has_key('title'):
-                    title = json_data['title']
-                else:
-                    title = _('ADD THE TITLE OF THE CONTENT HERE')
-                iframe.attrib['title'] = title
-                if json_data.has_key('width'):
-                    iframe.attrib['width'] = '100%'
-                if json_data.has_key('height'):
-                    iframe.attrib['height'] = '100%'
-                if iframe.attrib.has_key('frameborder'):
-                    del(iframe.attrib['frameborder'])
-                a = E.A()
-                a.attrib['href'] = url
-                a.text = title
-                iframe.append(a)
-                json_data['html'] = html.tostring(iframe)
+            if json_data.has_key('html'):
+                iframe = html.fromstring(json_data['html'])
+                if iframe.tag == 'iframe':
+                    if json_data.has_key('title'):
+                        title = json_data['title']
+                    else:
+                        title = _('ADD THE TITLE OF THE CONTENT HERE')
+                    iframe.attrib['title'] = title
+                    if json_data.has_key('width'):
+                        iframe.attrib['width'] = '100%'
+                    if json_data.has_key('height'):
+                        iframe.attrib['height'] = '100%'
+                    if iframe.attrib.has_key('frameborder'):
+                        del(iframe.attrib['frameborder'])
+                    a = E.A()
+                    a.attrib['href'] = url
+                    a.text = title
+                    iframe.append(a)
+                    json_data['html'] = html.tostring(iframe)
             # Acessibility issues
 
             for k, v in self.tr_fields.iteritems():

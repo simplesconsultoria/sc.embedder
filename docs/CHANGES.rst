@@ -7,14 +7,18 @@ There's a frood who really knows where his towel is
 - The WCGA 1.0 and WCGA 2.0 specifications and validators require some
   changes for acessibility issues:
   * You can't use fixed value in width and height (this will be overriden
-    with css in your site).
+    with css in your site) [rodfersou].
   * You need a title attribute in the iframe to make some screen readers
-    for blind people work.
+    for blind people work [rodfersou].
   * You need to add a link into the iframe tag to point to the content,
     like this if the browser (or the screen reader) don't support iframe
-    it behaves as alternative content.
+    it behaves as alternative content [rodfersou].
 * The W3C Validator suggest that the attribute frameborder is obsolete,
-  so I take it out if I find this attribute into the iframe element.
+  so I take it out if I find this attribute into the iframe element
+  [rodfersou].
+* Reviewing the code of python-oembed I discovered that not always it
+  will be an attribute html into json_data variable [rodfersou]:
+  https://github.com/abarmat/python-oembed/blob/master/oembed/__init__.py#L150-L193
 
 1.0b3 (2013-07-23)
 ^^^^^^^^^^^^^^^^^^
