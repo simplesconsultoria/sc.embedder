@@ -285,8 +285,9 @@ class BaseForm(DexterityExtensibleForm):
         el.attrib['width'] = str(data['width'])
         el.attrib['height'] = str(data['height'])
         el.attrib['title'] = data['IDublinCore.title']
-        a = el.getchildren() # get the anchor
-        a.text = data['IDublinCore.title']
+        a = [a for a in el.getchildren() if a.tag == 'a'] # get the anchor
+        if a:
+            a[0].text = data['IDublinCore.title']
 
         data['embed_html'] = html.tostring(el)
 
