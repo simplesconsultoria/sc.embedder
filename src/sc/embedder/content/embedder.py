@@ -282,12 +282,15 @@ class BaseForm(DexterityExtensibleForm):
         sel = cssselect.CSSSelector('body > *')
         el = sel(tree)[0]
 
-        el.attrib['width'] = str(data['width'])
-        el.attrib['height'] = str(data['height'])
-        el.attrib['title'] = data['IDublinCore.title']
-        a = [a for a in el.getchildren() if a.tag == 'a'] # get the anchor
-        if a:
-            a[0].text = data['IDublinCore.title']
+        if data.get('width', None):
+            el.attrib['width'] = data['width'] and str(data['width']) or el.attrib['width']
+        if data.get('height', None):
+            el.attrib['height'] = data['height'] and str(data['height']) or el.attrib['height']
+        if data.get('IDublinCore.title', None):
+            el.attrib['title'] = data['IDublinCore.title'] and str(data['IDublinCore.title']) or el.attrib['title']
+            a = [a for a in el.getchildren() if a.tag == 'a'] # get the anchor
+            if a:
+                a[0].text = data['IDublinCore.title']
 
         data['embed_html'] = html.tostring(el)
 
