@@ -285,6 +285,10 @@ class BaseForm(DexterityExtensibleForm):
             el.attrib['width'] = data['width'] and str(data['width']) or el.attrib['width']
         if data.get('height', None):
             el.attrib['height'] = data['height'] and str(data['height']) or el.attrib['height']
+        if data.get('IDublinCore.title', None):
+            el.attrib['title'] = data['IDublinCore.title'] and str(data['IDublinCore.title']) or el.attrib['title']
+            a = el.getchildren()[0]
+            a.text = data['IDublinCore.title'] and str(data['IDublinCore.title']) or el.attrib['title']
 
         data['embed_html'] = html.tostring(el)
 
