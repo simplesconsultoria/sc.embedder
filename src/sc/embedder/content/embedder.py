@@ -247,15 +247,16 @@ class BaseForm(DexterityExtensibleForm):
                     else:
                         title = _('ADD THE TITLE OF THE CONTENT HERE')
                     iframe.attrib['title'] = title
-                    # WCGA 1.0 and 2.0 validators says that we must not use fixed width values
-                    if json_data.has_key('width'):
-                        iframe.attrib['width'] = '100%'
-                    # WCGA 1.0 and 2.0 validators says that we must not use fixed height values
-                    if json_data.has_key('height'):
-                        iframe.attrib['height'] = '100%'
-                    # W3C validator says that we frameborder attribute is obsolete
+                    # Some iframe attributes are not valid anymore, second W3C
+                    # http://www.w3.org/TR/html5/embedded-content-0.html#the-iframe-element
                     if iframe.attrib.has_key('frameborder'):
                         del(iframe.attrib['frameborder'])
+                    if iframe.attrib.has_key('allowfullscreen'):
+                        del(iframe.attrib['allowfullscreen'])
+                    if iframe.attrib.has_key('mozallowfullscreen'):
+                        del(iframe.attrib['mozallowfullscreen'])
+                    if iframe.attrib.has_key('webkitallowfullscreen'):
+                        del(iframe.attrib['webkitallowfullscreen'])
                     # WCGA 1.0 and 2.0 validators says that we must add an alternative content
                     # as an anchor if iframe is not supported by the browser
                     a = E.A()
@@ -281,14 +282,11 @@ class BaseForm(DexterityExtensibleForm):
         sel = cssselect.CSSSelector('body > *')
         el = sel(tree)[0]
 
-        if data.get('width', None):
-            el.attrib['width'] = data['width'] and str(data['width']) or el.attrib['width']
-        if data.get('height', None):
-            el.attrib['height'] = data['height'] and str(data['height']) or el.attrib['height']
-        if data.get('IDublinCore.title', None):
-            el.attrib['title'] = data['IDublinCore.title'] and str(data['IDublinCore.title']) or el.attrib['title']
-            a = el.getchildren()[0]
-            a.text = data['IDublinCore.title'] and str(data['IDublinCore.title']) or el.attrib['title']
+        el.attrib['width'] = str(data['width'])
+        el.attrib['height'] = str(data['height'])
+        el.attrib['title'] = data['IDublinCore.title']
+        a = el.getchildren() # get the anchor
+        a.text = data['IDublinCore.title']
 
         data['embed_html'] = html.tostring(el)
 

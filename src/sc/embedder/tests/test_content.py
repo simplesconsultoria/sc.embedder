@@ -21,25 +21,23 @@ PROVIDERS = {
 }
 
 YOUTUBE_EMBED = """
-<iframe width="100%" height="100%" \
+<iframe width="459" height="344" \
 src="http://www.youtube.com/embed/d8bEU80gIzQ?feature=oembed" \
-allowfullscreen title="Introducing Plone">\
+title="Introducing Plone">\
 <a href="http://www.youtube.com/watch?v=d8bEU80gIzQ">\
 Introducing Plone</a></iframe>
 """.strip('\n')
 
 VIMEO_EMBED = """
 <iframe src="http://player.vimeo.com/video/17914974" \
-width="100%" height="100%" webkitallowfullscreen \
-mozallowfullscreen allowfullscreen title="The Backwater Gospel">\
+width="1280" height="720" title="The Backwater Gospel">\
 <a href="http://vimeo.com/17914974">The Backwater Gospel</a></iframe>
 """.strip('\n')
 
 VIDEOJS_EMBED = """
 <iframe src="http://nohost/plone/test-folder/@@embedder_videojs?\
 src=http%3A%2F%2Fvideo-js.zencoder.com%2Foceans-clip.webm&amp;type=video%2Fwebm" \
-class="vjs-iframe" allowfullscreen="1" mozallowfullscreen="1" webkitallowfullscreen="1" \
-title="ADD THE TITLE OF THE CONTENT HERE">\n<a \
+class="vjs-iframe" title="ADD THE TITLE OF THE CONTENT HERE">\n<a \
 href="http://video-js.zencoder.com/oceans-clip.webm">ADD THE TITLE OF THE CONTENT HERE\
 </a></iframe>
 """.strip('\n')
