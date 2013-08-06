@@ -234,27 +234,36 @@ class BaseForm(DexterityExtensibleForm):
                 if json_data is None:
                     return
 
-            # Acessibility issues
+            ## Acessibility issues
+            # Somethimes python-oembed don't return html attribute
+            # https://github.com/abarmat/python-oembed/blob/master/oembed/__init__.py#L150-L193
             if json_data.has_key('html'):
                 iframe = html.fromstring(json_data['html'])
+                # Somethimes the embedded data will not be an iframe
                 if iframe.tag == 'iframe':
+                    # If there is not a title we put a placeholder to be reviewed by user
                     if json_data.has_key('title'):
                         title = json_data['title']
                     else:
                         title = _('ADD THE TITLE OF THE CONTENT HERE')
                     iframe.attrib['title'] = title
+                    # WCGA 1.0 and 2.0 validators says that we must not use fixed width values
                     if json_data.has_key('width'):
                         iframe.attrib['width'] = '100%'
+                    # WCGA 1.0 and 2.0 validators says that we must not use fixed height values
                     if json_data.has_key('height'):
                         iframe.attrib['height'] = '100%'
+                    # W3C validator says that we frameborder attribute is obsolete
                     if iframe.attrib.has_key('frameborder'):
                         del(iframe.attrib['frameborder'])
+                    # WCGA 1.0 and 2.0 validators says that we must add an alternative content
+                    # as an anchor if iframe is not supported by the browser
                     a = E.A()
                     a.attrib['href'] = url
                     a.text = title
                     iframe.append(a)
                     json_data['html'] = html.tostring(iframe)
-            # Acessibility issues
+            ## Acessibility issues
 
             for k, v in self.tr_fields.iteritems():
                 if json_data.get(k):

@@ -16,9 +16,7 @@ There's a frood who really knows where his towel is
 * The W3C Validator suggest that the attribute frameborder is obsolete,
   so I take it out if I find this attribute into the iframe element
   [rodfersou].
-* Reviewing the code of python-oembed I discovered that not always it
-  will be an attribute html into json_data variable [rodfersou]:
-  https://github.com/abarmat/python-oembed/blob/master/oembed/__init__.py#L150-L193
+
 
 1.0b3 (2013-07-23)
 ^^^^^^^^^^^^^^^^^^
