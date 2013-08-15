@@ -287,7 +287,7 @@ class BaseForm(DexterityExtensibleForm):
         if data.get('height', None):
             el.attrib['height'] = data['height'] and str(data['height']) or el.attrib['height']
         if data.get('IDublinCore.title', None):
-            el.attrib['title'] = data['IDublinCore.title'] and str(data['IDublinCore.title']) or el.attrib['title']
+            el.attrib['title'] = data['IDublinCore.title'] and unicode(data['IDublinCore.title']) or el.attrib['title']
             a = [a for a in el.getchildren() if a.tag == 'a'] # get the anchor
             if a:
                 a[0].text = data['IDublinCore.title']
