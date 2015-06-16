@@ -12,8 +12,7 @@ embedded content (such as photos or videos) from third parties into your Plone
 site.
 
 You can easily embed content from Flickr, SlideShare, SoundCloud, Vimeo,
-Wikipedia, YouTube, and many other supporting the `oEmbed`_ format
-especification.
+Wikipedia, YouTube, and many other.
 
 Mostly Harmless
 ---------------
@@ -111,12 +110,4 @@ The *Image* field is just to assign an image to the object that will give a
 quick visual description of the content. The idea is to show it in listing
 views or covers.
 
-Providers
-^^^^^^^^^
-
-This product use `collective.oembed`_. You can check its documentation to see
-a list of them.
-
-.. _`oEmbed`: http://www.oembed.com/
 .. _`opening a support ticket`: https://github.com/simplesconsultoria/sc.embedder/issues
-.. _`collective.oembed`: http://pypi.python.org/pypi/collective.oembed
