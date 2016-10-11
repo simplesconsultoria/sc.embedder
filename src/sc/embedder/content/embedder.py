@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from collective import dexteritytextindexer
-from five import grok
 from lxml import cssselect
 from lxml import etree
 from lxml import html
@@ -32,16 +31,12 @@ from zope import schema
 from zope.component import adapter
 from zope.event import notify
 from zope.interface import implementer
-from zope.interface import Interface
 from zope.interface import Invalid
 
 import re
 import requests
 import urllib2
 import urlparse
-
-
-grok.templatedir('templates')
 
 
 def has_image(content):
@@ -149,8 +144,6 @@ class IEmbedder(form.Schema):
 class Embedder(dexterity.Item):
     """ A content embedder
     """
-    grok.implements(IEmbedder)  # noqa: https://github.com/gforcada/flake8-deprecated/issues/9
-
     def image_thumb(self):
         ''' Return a thumbnail '''
         if not has_image(self):
@@ -329,7 +322,6 @@ class BaseForm(DexterityExtensibleForm):
 
 
 class AddForm(BaseForm, dexterity.AddForm):
-    grok.name('sc.embedder')
     template = ViewPageTemplateFile('templates/sc.embedder.pt')
 
     @button.buttonAndHandler(_('Save'), name='save')
@@ -389,7 +381,6 @@ class AddForm(BaseForm, dexterity.AddForm):
 
 
 class EditForm(dexterity.EditForm, BaseForm):
-    grok.context(IEmbedder)
     template = ViewPageTemplateFile('templates/edit.pt')
 
     @button.buttonAndHandler(_('Load'), name='load')
@@ -433,10 +424,6 @@ class EditForm(dexterity.EditForm, BaseForm):
 
 
 class View(dexterity.DisplayForm):
-    grok.context(IEmbedder)
-    grok.require('zope2.View')
-    grok.name('view')
-
     def get_player_pos_class(self):
         """ Returns the css class based on the position of the embed item.
         """
@@ -445,7 +432,5 @@ class View(dexterity.DisplayForm):
         return css_class
 
 
-class EmbedderVideoJS(grok.View):
-    grok.context(Interface)
-    grok.require('zope2.View')
-    grok.name('embedder_videojs')
+class EmbedderVideoJS:
+    pass
