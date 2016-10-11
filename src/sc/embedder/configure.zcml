@@ -17,26 +17,12 @@
     <include file="profiles.zcml"/>
     <include file="skins.zcml"/>
     <include package=".browser"/>
+    <include package=".content"/>
     <include package=".tiles" zcml:condition="installed collective.cover" />
 
     <permission
         id="sc.embedder.AddEmbedder"
         title="sc.embedder: Add Embedder"
-        />
-
-    <adapter factory=".content.embedder.EmbedderImageFieldWidget" />
-
-    <z3c:widgetTemplate
-        mode="input"
-        widget=".content.embedder.EmbedderImageWidget"
-        layer="z3c.form.interfaces.IFormLayer"
-        template="content/image_input.pt"
-        />
-
-    <adapter
-        for="sc.embedder.content.embedder.IEmbedder"
-        provides="Products.TinyMCE.adapters.interfaces.JSONDetails.IJSONDetails"
-        factory=".adapters.JSONDetails"
         />
 
    <utility factory="sc.embedder.utility.Consumer" />
