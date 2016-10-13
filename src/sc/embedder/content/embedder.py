@@ -10,14 +10,15 @@ from plone.dexterity.browser.add import DefaultAddForm
 from plone.dexterity.browser.add import DefaultAddView
 from plone.dexterity.browser.base import DexterityExtensibleForm
 from plone.dexterity.browser.edit import DefaultEditForm
+from plone.dexterity.content import Item
 from plone.dexterity.events import AddCancelledEvent
 from plone.dexterity.events import EditCancelledEvent
 from plone.dexterity.events import EditFinishedEvent
-from plone.directives import dexterity
 from plone.directives import form
 from plone.formwidget.namedfile.widget import NamedImageWidget
 from plone.namedfile.field import NamedImage as BaseNamedImage
 from plone.namedfile.file import NamedImage as ImageValueType
+from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from sc.embedder import MessageFactory as _
 from sc.embedder.interfaces import IConsumer
@@ -145,7 +146,7 @@ class IEmbedder(form.Schema):
 
 
 @implementer(IEmbedder)
-class Embedder(dexterity.Item):
+class Embedder(Item):
 
     """A content embedder."""
 
@@ -435,7 +436,9 @@ class EditForm(DefaultEditForm, BaseForm):
             return load
 
 
-class View(dexterity.DisplayForm):
+class View(BrowserView):
+    index = ViewPageTemplateFile('templates/view.pt')
+
     def get_player_pos_class(self):
         """ Returns the css class based on the position of the embed item.
         """
@@ -443,6 +446,12 @@ class View(dexterity.DisplayForm):
         css_class = '%s_embedded' % pos.lower()
         return css_class
 
+    def __call__(self):
+        return self.index()
 
-class EmbedderVideoJS:
-    pass
+
+class EmbedderVideoJS(BrowserView):
+    index = ViewPageTemplateFile('templates/embeddervideojs.pt')
+
+    def __call__(self):
+        return self.index()
