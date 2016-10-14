@@ -6,7 +6,7 @@ There's a frood who really knows where his towel is.
 1.1b3 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Remove dependency on five.grok (closes `#63`_.
+- Remove dependency on five.grok (closes `#63`_).
   [rodfersou]
 
 - Package is compatible with Plone 4.2 again.
