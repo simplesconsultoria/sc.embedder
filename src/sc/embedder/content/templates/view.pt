@@ -25,8 +25,16 @@
                  <span tal:replace="structure context/embed_html"/>
             </div>
 
-            <div id="embed_body_text" class="field" tal:condition="context/text">
-                <div tal:content="structure view/w/text/render" />
+            <div id="embed_body_text" class="field"
+                tal:define="text context/text/output|nothing">
+                <p class="discreet"
+                    tal:define="is_editable context/@@plone_context_state/is_editable"
+                    tal:condition="python:not text and is_editable"
+                    i18n:domain="plone"
+                    i18n:translate="no_body_text">
+                  This item does not have any body text, click the edit tab to change it.
+                </p>
+                <div tal:condition="text" tal:content="structure text" />
             </div>
 
             <div tal:condition='python:context.player_position == "Bottom"'
@@ -34,9 +42,17 @@
                  <span tal:replace="structure context/embed_html" />
             </div>
 
-            <div id="alt_cont" class="field" tal:condition="context/alternate_content">
-                <a i18n:translate="">Alternate content</a>
-                <div class="alt_cont_text" tal:content="structure view/w/alternate_content/render" />
+            <div id="alt_cont" class="field"
+                tal:define="text context/alternate_content/output|nothing">
+                <p class="discreet"
+                    tal:define="is_editable context/@@plone_context_state/is_editable"
+                    tal:condition="python:not text and is_editable"
+                    i18n:domain="plone"
+                    i18n:translate="no_body_text">
+                  This item does not have any alternate content, click the edit tab to change it.
+                </p>
+                <a i18n:translate="" tal:condition="text">Alternate content</a>
+                <div class="alt_cont_text" tal:condition="text" tal:content="structure context/alternate_content" />
             </div>
 
             <div tal:replace="structure provider:plone.belowcontentbody" />
