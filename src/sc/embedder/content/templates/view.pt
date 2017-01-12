@@ -52,7 +52,7 @@
                   This item does not have any alternate content, click the edit tab to change it.
                 </p>
                 <a i18n:translate="" tal:condition="text">Alternate content</a>
-                <div class="alt_cont_text" tal:condition="text" tal:content="structure context/alternate_content" />
+                <div class="alt_cont_text" tal:condition="text" tal:content="structure text" />
             </div>
 
             <div tal:replace="structure provider:plone.belowcontentbody" />

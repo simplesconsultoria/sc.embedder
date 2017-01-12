@@ -9,6 +9,8 @@ Library  Remote  ${PLONE_URL}/RobotRemote
 
 ${html_text} =  HTML code
 ${embedder_title} =  Nulla in mundo pax sincera
+${body_text} =  Body content text
+${alternate_content} =  Alternate content text
 ${title_selector} =  input#form-widgets-IDublinCore-title
 ${description_selector} =  textarea#form-widgets-IDublinCore-description
 ${width_selector} =  input#form-widgets-width
@@ -48,6 +50,8 @@ Create
     Click Button  Save
     Page Should Contain  Item created
     Page Should Contain  ${title}
+    Page Should Contain  This item does not have any body text, click the edit tab to change it.
+    Page Should Contain  This item does not have any alternate content, click the edit tab to change it.
 
 Update
     [arguments]  ${description}
@@ -56,9 +60,21 @@ Update
     Input Text  css=${description_selector}  ${description}
     Click Element  css=${image_input_selector}
     Select File  image.jpg
+    Wait For Condition  return tinyMCE.activeEditor != null
+    Execute Javascript
+    ...  var editors = tinyMCE.editors;
+    ...  if (editors[0] === undefined) {
+    ...    editors = Object.keys(tinyMCE.editors).map(function(key) {
+    ...      return tinyMCE.editors[key];
+    ...    });
+    ...  }
+    ...  editors[0].setContent("${body_text}");
+    ...  editors[1].setContent("${alternate_content}");
     Click Button  Save
     Page Should Contain  Changes saved
     Page Should Contain  ${description}
+    Page Should Contain  ${body_text}
+    Page Should Contain  ${alternate_content}
 
 Delete
     Open Action Menu
