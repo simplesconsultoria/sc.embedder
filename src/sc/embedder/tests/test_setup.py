@@ -35,6 +35,10 @@ class InstallTestCase(unittest.TestCase):
         expected = ['Contributor', 'Manager', 'Owner', 'Site Administrator']
         self.assertListEqual(roles, expected)
 
+    def test_tinymce_linkables(self):
+        linkables = self.portal.portal_tinymce.linkable.split('\n')
+        self.assertIn('sc.embedder', linkables)
+
     def test_tile(self):
         tiles = api.portal.get_registry_record('plone.app.tiles')
         self.assertIn(u'sc.embedder', tiles)
@@ -60,6 +64,10 @@ class UninstallTest(unittest.TestCase):
     def test_css_removed(self):
         resource_ids = self.portal.portal_css.getResourceIds()
         self.assertNotIn('embedder.css', resource_ids)
+
+    def test_tinymce_linkables(self):
+        linkables = self.portal.portal_tinymce.linkable.split('\n')
+        self.assertNotIn('sc.embedder', linkables)
 
     def test_tile_removed(self):
         tiles = api.portal.get_registry_record('plone.app.tiles')
