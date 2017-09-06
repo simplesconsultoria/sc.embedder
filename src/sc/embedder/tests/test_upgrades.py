@@ -2,6 +2,7 @@
 from plone import api
 from sc.embedder.config import PROFILE
 from sc.embedder.testing import INTEGRATION_TESTING
+from sc.embedder.testing import IS_PLONE_5
 from sc.embedder.upgrades.v1003 import REMOVE_CSS
 from sc.embedder.upgrades.v1003 import REMOVE_JS
 
@@ -143,6 +144,8 @@ class Upgrade1003to1004TestCase(UpgradeTestCaseBase):
         self.assertGreaterEqual(int(version), int(self.to_version))
         self.assertEqual(self._how_many_upgrades_to_do(), 1)
 
+    # FIXME: https://community.plone.org/t/making-content-type-linkable-in-tinymce-under-plone-5/4822
+    @unittest.skipIf(IS_PLONE_5, 'Not supported under Plone 5')
     def test_add_as_tinymce_linkable(self):
         # check if the upgrade step is registered
         title = u'Add as TinyMCE linkable'
