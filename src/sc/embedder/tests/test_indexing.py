@@ -22,8 +22,9 @@ class IndexingTestCase(unittest.TestCase):
     def test_interface_indexed(self):
         results = api.content.find(object_provides=IEmbedder.__identifier__)
         self.assertEqual(2, len(results))
-        self.assertEqual(results[0].getURL(), self.foo.absolute_url())
-        self.assertEqual(results[1].getURL(), self.bar.absolute_url())
+        results = [r.getURL() for r in results]
+        self.assertIn(self.foo.absolute_url(), results)
+        self.assertIn(self.bar.absolute_url(), results)
 
     def test_portal_type_indexed(self):
         results = api.content.find(portal_type='sc.embedder')
@@ -50,7 +51,7 @@ class IndexingTestCase(unittest.TestCase):
         self.assertEqual(1, len(results))
         self.assertEqual(results[0].getURL(), self.foo.absolute_url())
 
-    def test_tags_indexed(self):
+    def test_keywords_indexed(self):
         self.foo.subject = ('foo', 'baz')
         self.foo.reindexObject()
         self.bar.subject = ('bar', 'baz')
@@ -100,7 +101,7 @@ class IndexingTestCase(unittest.TestCase):
         self.assertEqual(1, len(results))
         self.assertEqual(results[0].getURL(), self.foo.absolute_url())
 
-    def test_tags_in_searchable_text(self):
+    def test_keywords_in_searchable_text(self):
         self.foo.subject = ('foo', 'baz')
         self.foo.reindexObject()
         self.bar.subject = ('bar', 'baz')
@@ -113,5 +114,6 @@ class IndexingTestCase(unittest.TestCase):
         self.assertEqual(results[0].getURL(), self.bar.absolute_url())
         results = api.content.find(SearchableText=('baz'))
         self.assertEqual(2, len(results))
-        self.assertEqual(results[0].getURL(), self.foo.absolute_url())
-        self.assertEqual(results[1].getURL(), self.bar.absolute_url())
+        results = [r.getURL() for r in results]
+        self.assertIn(self.foo.absolute_url(), results)
+        self.assertIn(self.bar.absolute_url(), results)

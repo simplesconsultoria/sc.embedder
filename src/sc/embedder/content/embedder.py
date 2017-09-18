@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
-from collective import dexteritytextindexer
 from lxml import cssselect
 from lxml import etree
 from lxml import html
 from lxml.html.builder import DIV
 from plone import api
 from plone.app.textfield import RichText
+from plone.app.textfield.interfaces import ITransformer
+from plone.app.textfield.value import IRichTextValue
 from plone.autoform import directives as form
 from plone.dexterity.browser.add import DefaultAddForm
 from plone.dexterity.browser.add import DefaultAddView
@@ -16,9 +17,11 @@ from plone.dexterity.events import AddCancelledEvent
 from plone.dexterity.events import EditCancelledEvent
 from plone.dexterity.events import EditFinishedEvent
 from plone.formwidget.namedfile.widget import NamedImageWidget
+from plone.indexer import indexer
 from plone.namedfile.field import NamedImage as BaseNamedImage
 from plone.namedfile.file import NamedImage as ImageValueType
 from plone.supermodel import model
+from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from sc.embedder import MessageFactory as _
@@ -84,8 +87,6 @@ def EmbedderImageFieldWidget(field, request):
 class IEmbedder(model.Schema):
     """ A representation of a content embedder content type
     """
-
-    dexteritytextindexer.searchable('text', 'alternate_content')
 
     form.order_before(**{'url': '*'})
 
@@ -438,3 +439,33 @@ class EmbedderVideoJS(BrowserView):
 
     def __call__(self):
         return self.index()
+
+
+@indexer(IEmbedder)
+def searchable_text_indexer(obj):
+    """SearchableText should contain id, title, description, body text,
+    alternate text and keywords.
+    """
+    transformer = ITransformer(obj)
+    text = obj.text
+    if IRichTextValue.providedBy(text):
+        text = transformer(text, 'text/plain')
+    else:
+        text = ''
+
+    alternate_text = obj.alternate_content
+    if IRichTextValue.providedBy(alternate_text):
+        alternate_text = transformer(alternate_text, 'text/plain')
+    else:
+        alternate_text = ''
+
+    keywords = u' '.join(safe_unicode(s) for s in obj.Subject())
+
+    return u' '.join((
+        safe_unicode(obj.id),
+        safe_unicode(obj.title) or u'',
+        safe_unicode(obj.description) or u'',
+        safe_unicode(text),
+        safe_unicode(alternate_text),
+        safe_unicode(keywords),
+    ))
