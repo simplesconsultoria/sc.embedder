@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 from plone import api
+from plone.dexterity.interfaces import IDexterityFTI
 from sc.embedder.config import PROFILE
 from sc.embedder.testing import INTEGRATION_TESTING
 from sc.embedder.testing import IS_PLONE_5
 from sc.embedder.upgrades.v1003 import REMOVE_CSS
 from sc.embedder.upgrades.v1003 import REMOVE_JS
+from zope.component import getUtility
 
 import unittest
 
@@ -171,8 +173,6 @@ class Upgrade1003to1004TestCase(UpgradeTestCaseBase):
 
         # simulate state on previous version
         from plone.app.relationfield.behavior import IRelatedItems
-        from plone.dexterity.interfaces import IDexterityFTI
-        from zope.component import getUtility
         fti = getUtility(IDexterityFTI, name='sc.embedder')
         behaviors = list(fti.behaviors)
         behaviors.remove(IRelatedItems.__identifier__)
@@ -202,8 +202,6 @@ class UpgradeTo1005TestCase(UpgradeTestCaseBase):
 
         # simulate state on previous version
         from sc.embedder.upgrades.v1005 import BEHAVIOR
-        from plone.dexterity.interfaces import IDexterityFTI
-        from zope.component import getUtility
         fti = getUtility(IDexterityFTI, name='sc.embedder')
         fti.behaviors += (BEHAVIOR,)
         self.assertIn(BEHAVIOR, fti.behaviors)

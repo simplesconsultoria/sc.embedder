@@ -13,7 +13,6 @@ class IndexingTestCase(unittest.TestCase):
 
     def setUp(self):
         self.portal = self.layer['portal']
-        self.catalog = self.portal['portal_catalog']
 
         with api.env.adopt_roles(['Manager']):
             self.foo = api.content.create(self.portal, 'sc.embedder', 'foo')
