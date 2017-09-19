@@ -6,7 +6,6 @@ from lxml.html.builder import DIV
 from plone import api
 from plone.app.textfield import RichText
 from plone.app.textfield.interfaces import ITransformer
-from plone.app.textfield.value import IRichTextValue
 from plone.autoform import directives as form
 from plone.dexterity.browser.add import DefaultAddForm
 from plone.dexterity.browser.add import DefaultAddView
@@ -447,16 +446,15 @@ def searchable_text_indexer(obj):
     alternate text and keywords.
     """
     transformer = ITransformer(obj)
-    text = obj.text
-    if IRichTextValue.providedBy(text):
-        text = transformer(text, 'text/plain')
-    else:
+
+    try:
+        text = transformer(obj.text, 'text/plain')
+    except AttributeError:
         text = ''
 
-    alternate_text = obj.alternate_content
-    if IRichTextValue.providedBy(alternate_text):
-        alternate_text = transformer(alternate_text, 'text/plain')
-    else:
+    try:
+        alternate_text = transformer(obj.alternate_content, 'text/plain')
+    except AttributeError:
         alternate_text = ''
 
     keywords = u' '.join(safe_unicode(s) for s in obj.Subject())
