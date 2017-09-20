@@ -39,8 +39,8 @@ from zope import schema
 from zope.component import adapter
 from zope.event import notify
 from zope.interface import implementer
-from zope.schema.vocabulary import SimpleVocabulary
 from zope.schema.vocabulary import SimpleTerm
+from zope.schema.vocabulary import SimpleVocabulary
 
 import requests
 import urllib2
