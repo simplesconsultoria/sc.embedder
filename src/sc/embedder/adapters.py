@@ -3,7 +3,7 @@ from lxml import cssselect
 from lxml import etree
 from lxml import html
 from Products.TinyMCE.adapters.interfaces.JSONDetails import IJSONDetails
-from Products.TinyMCE.adapters.JSONDetails import JSONDetails
+from Products.TinyMCE.adapters.JSONDetails import JSONDetails as JSONDetailsBase
 from urllib2 import quote
 from zope.interface import implementer
 
@@ -11,7 +11,7 @@ import json
 
 
 @implementer(IJSONDetails)
-class JSONDetails(JSONDetails):
+class JSONDetails(JSONDetailsBase):
     """Return details of the current object in JSON"""
 
     def getDetails(self):
